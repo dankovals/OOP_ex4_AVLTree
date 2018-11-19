@@ -1,0 +1,105 @@
+dan.kovalsky
+304957913
+Dan Kovalsky
+
+
+=============================
+=      File description     =
+=============================
+AvlTree.java:
+    Represents an AVL tree data structure.
+    It has the same properties like the BST, but its always stay balance. In addition and deletion,
+    the avl do the same like the bst, and after this, its looking for violation, according to the heights of
+    his sons. And if there is any violations, its repair them with the rotation operations.
+
+TreeNode.java:
+    Represents a node in the tree data structure.
+    The node holds the information: father and sons, his value/data, and his height on the tree (0 for leafs).
+    All of the fields here are open for changing, with setters and getters.
+    its also has method that gets the balance factor of the node.
+    The Node represented by his value.
+    There is direct interaction with the avl class, because each value of the avl class, represented
+    by a node object.
+
+BsTree.java:
+    Represents a binary search tree data structure.
+    Its nodes holds only int values, and don't allowed any duplication of values
+    The tree holds some node for root, and by looking of all of his offspring we can get the whole tree.
+    The tree has the BST property, for each node, his left sub tree holds smaller values, and his
+    right subtree holds bigger values.
+    its implemented the interface Binary tree, and Avl tree extends this class, because Avl is a Bst, with
+    another property - balance. therefore many fields and methods of AvlTree implemented in this class.
+    Its important methods are add, delete, contains, size. and its has some package modifier and static
+    methods like finding the successor and get the node of some value
+
+BinaryTree.java:
+    The methods of this interface, are common for all the binary trees.
+    Each binary tree has the methods add, delete, size and contains.
+    Avl is a binary tree, so the avl implements all of this methods, in the
+    BsTree class, or direct in AvlTree class.
+
+=============================
+=          Design           =
+=============================
+The main idea of this design is to leave the program open for new data structures.
+I implemented the BST, with all of its main operations, so now, if some one want to implement any data
+structure that use the BST properties he can extend this and save a lot of his work.
+Again the class TreeNode can be useful for a lot of data structures, so i decided to build it with
+the default/package modifier, so that all of the classes in the package (data structures) can use
+node class, but users outside this package, don't need to know about it.
+
+=============================
+=  Implementation details   =
+=============================
+    Describe *add*: The add operation makes direct use with the BsTree class, its first adds the value to the
+tree, as it a BST, this takes O(log(n)) because its balanced tree. After this, from the new node, its start
+to go up and update the fathers heights, and stop only when it finds a violation, or when its pass the root,
+i.e. the tree is balance. if its finds violation, it fix it, and stop the loop. this also takes only
+O(log(n)), so add operation, takes O(log(n)).
+
+    Describe *delete*: Delete operation also do the first step, the same like BST, so its uses the delete
+method of BsTree and its takes O(log(n)). After the the deleting, BsTree save the father of the deleted node,
+or in the case of two sons, the father of the successor. from this node, the avl delete, start to go up,
+and look for a violations, if there is on violation - update height, and go up. if there is violation,
+fix it, but this time, continue to go up, and look for other optional violations. so its stop only after
+visiting the root. again its takes only O(log(n)), so the total time of delete is O(log(n))
+
+helper method in use only for add is bstInsert.
+helper methods in use only for delete are bstRemove, noSons/oneSon/twoSons-Deletion, and getSuccessor.
+helper methods that in use for both are setNodeHeight, fixViolation, getViolationKind, rotateLeft/Right.
+both of them also use the contain method, in first step ( that takes also O(log(n)) )
+
+=============================
+=    Answers to questions   =
+=============================
+	5.1) Analyzing the AVL tree:
+Required series:  8 --> 5 --> 10 --> 3 --> 6 --> 9 --> 11 --> 2 --> 4 --> 7 --> 12 --> 1.
+
+    5.2) The complexity of constructing an AVL tree:
+1} The running time of the data constructor is O(n*log(n)):
+because it adds n nodes to the tree, and each add operation cost O(log(n))
+2)bonus: The best case is when we have array that composed of n numbers with the same value.
+It will take O(n), because, for each one of the numbers, contain will return false, after looking at the
+rootO(1).           - O(1) * n --> O(n)
+
+    5.3) The complexity of copying an AVL tree:
+1} The running time of the data constructor is O(n):
+    because its get a sorted list of all the values of the given tree, in O(n). And then its build the new
+    avl from the sorted list with the median method that we learned in DaSt classes, and also takes O(n).
+2} I think that for all the cases of givens avl, the time will stay O(n), because its can't add n nodes,
+    in less then n operations.
+
+    5.4) The complexity of calculating the minimal number of nodes in an AVL tree of a given height:
+1} The asymptotic time of my method is O(h). because it has only simple for loop, that runs
+    h - 2 steps, and composed of operations of O(1)
+2} I think that this is the best asymptotic time to find the answer, because the height of an avl is log(n).
+    So the only option to do this in better time is only if there is some direct formula,
+    that finds the answer in O(1), but i can't think of one!!!
+
+
+
+
+
+
+
+
